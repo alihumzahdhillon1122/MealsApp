@@ -7,19 +7,25 @@ import Subtitle from '../components/MealDetail/Subtitle';
 import List from '../components/MealDetail/List';
 import { MEALS } from '../data/dummy-data';
 import { useDispatch, useSelector } from 'react-redux';
+import { addFavorite, removeFavorite} from '../store/redux/favorites'
 
 function MealDetailScreen({ route, navigation }) {
 
     const favoriteMealIds = useSelector((state) => state.favoriteMeals.ids);
+    const dispatch = useDispatch();
 
 
     const mealId = route.params.mealId;
     const selectedMeal = MEALS.find((meal) => meal.id === mealId);
 
     const mealsFavourite = favoriteMealIds.includes(mealId)
+    function changeFavoriteStatusHandler (){
+        if(mealsFavourite){
+            dispatch(removeFavorite({id : mealId}))
+        }else {
+            dispatch(addFavorite({id : mealId}))
+        }
 
-    function headerButtonPressHandler() {
-        console.log('pressed!')
     }
 
     useLayoutEffect(() => {
@@ -29,9 +35,9 @@ function MealDetailScreen({ route, navigation }) {
                     <View style={{ marginRight: 10 }}>
 
                         <IconButton
-                            icon="star"
+                            icon={mealsFavourite ? 'star' : 'star-outline'}
                             color="white"
-                            onWhenPress={headerButtonPressHandler}
+                            onWhenPress={changeFavoriteStatusHandler}
 
                         />
                     </View>
@@ -39,7 +45,7 @@ function MealDetailScreen({ route, navigation }) {
             }
         });
 
-    }, [navigation, headerButtonPressHandler]);
+    }, [navigation, changeFavoriteStatusHandler]);
 
     return (
         <ScrollView style={styles.rootContainer}>
@@ -99,4 +105,3 @@ const styles = StyleSheet.create({
 
 
 
-// 5;13    2.39
