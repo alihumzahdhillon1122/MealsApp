@@ -6,11 +6,17 @@ import MealDetails from '../components/MealDetails';
 import Subtitle from '../components/MealDetail/Subtitle';
 import List from '../components/MealDetail/List';
 import { MEALS } from '../data/dummy-data';
+import { useDispatch, useSelector } from 'react-redux';
 
 function MealDetailScreen({ route, navigation }) {
-    const mealId = route.params.mealId;
 
+    const favoriteMealIds = useSelector((state) => state.favoriteMeals.ids);
+
+
+    const mealId = route.params.mealId;
     const selectedMeal = MEALS.find((meal) => meal.id === mealId);
+
+    const mealsFavourite = favoriteMealIds.includes(mealId)
 
     function headerButtonPressHandler() {
         console.log('pressed!')
@@ -93,3 +99,4 @@ const styles = StyleSheet.create({
 
 
 
+// 5;13    2.39

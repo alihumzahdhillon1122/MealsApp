@@ -1,9 +1,10 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 import { createDrawerNavigator } from '@react-navigation/drawer'
 import { Ionicons } from '@expo/vector-icons'
+import { Provider } from 'react-redux';
 
 
 
@@ -11,7 +12,7 @@ import CategoriesScreen from './screens/CategoriesScreen';
 import MealsOverViewScreen from './screens/MealsOverviewScreen';
 import MealDetailScreen from './screens/MealDetailScreen';
 import FavoriteScreeen from './screens/FavoriteScreen';
-
+import { store } from './store/redux/store';
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -41,30 +42,32 @@ export default function App() {
 
     <>
       <StatusBar style='light' />
-      <NavigationContainer>
-        <Stack.Navigator screenOptions={{
-          headerStyle: { backgroundColor: '#351401' },
-          headerTintColor: 'white',
-          cardStyle: { backgroundColor: '#3f2f25' }
-        }}>
-          <Stack.Screen
-            name="Drawer"
-            component={DrawerNavigator}
-            options={{
-              // title: 'All Categories',
-              headerShown: false,
+      <Provider store={store}>
+        <NavigationContainer>
+          <Stack.Navigator screenOptions={{
+            headerStyle: { backgroundColor: '#351401' },
+            headerTintColor: 'white',
+            cardStyle: { backgroundColor: '#3f2f25' }
+          }}>
+            <Stack.Screen
+              name="Drawer"
+              component={DrawerNavigator}
+              options={{
+                // title: 'All Categories',
+                headerShown: false,
 
 
+              }} />
+            <Stack.Screen
+              name="MealsOverview" component={MealsOverViewScreen}
+
+            />
+            <Stack.Screen name="MealDetail" component={MealDetailScreen} options={{
+              title: 'About The Meal'
             }} />
-          <Stack.Screen
-            name="MealsOverview" component={MealsOverViewScreen}
-
-          />
-          <Stack.Screen name="MealDetail" component={MealDetailScreen} options={{
-            title: 'About The Meal'
-          }} />
-        </Stack.Navigator>
-      </NavigationContainer>
+          </Stack.Navigator>
+        </NavigationContainer>
+      </Provider>
     </>
 
 

@@ -1,6 +1,9 @@
-import {Text} from 'react-native'
-function FavoriteScreeen (){
-    return <Text>the FavoriteScreeen</Text>
+import { Text } from 'react-native'
+import MealsList from '../components/MealsList/MealsList';
+function FavoriteScreeen() {
+    return (
+        <MealsList />
+    )
 }
 
 
